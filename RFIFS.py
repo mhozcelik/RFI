@@ -2,11 +2,11 @@ import numpy as np
 import pandas as pd
 from lightgbm import LGBMClassifier
     
-def RFI(X_train,y_train):
+def RFI(X_train,y_train,importance_type='gain'):
     # Relative Feature Importance
     RFI = pd.DataFrame(X_train.columns,columns=['feature'])
     
-    selector = LGBMClassifier(random_state=42,verbosity=-1)
+    selector = LGBMClassifier(random_state=42,verbosity=-1,importance_type=importance_type)
     selector.fit(X_train,y_train)
     RFI['feature_importance'] = selector.feature_importances_ / sum(selector.feature_importances_)
 
